@@ -1,0 +1,75 @@
+<h3 mat-dialog-title class="modal-header"> Add</h3>
+
+<mat-dialog-content>
+
+    <form [formGroup]="addContactForm">
+
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Nom" formControlName="nom" />
+            </mat-form-field>
+
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Prenom" formControlName="prenom" />
+            </mat-form-field>
+
+
+            <mat-form-field fxFlex="30%">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dateNaissance">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              
+
+        </div>
+    </form>
+
+    <form [formGroup]="addAdresseForm">
+
+
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Type d'adresse" formControlName="typeAdresse" />
+            </mat-form-field>
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Type de voie" formControlName="typeVoie" />
+            </mat-form-field>
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Telephone " formControlName="numTelephone" />
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Numéro" formControlName="numero" />
+            </mat-form-field>
+            <mat-form-field fxFlex="65%" class="form-field">
+                <input matInput required type="text" placeholder="Rue" formControlName="rue" />
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Code postale" formControlName="cp" />
+            </mat-form-field>
+            <mat-form-field fxFlex="65%" class="form-field">
+                <input matInput required type="text" placeholder="Ville " formControlName="ville" />
+            </mat-form-field>
+
+            
+        </div>
+
+        <div fxLayout="row">
+            <mat-form-field fxFlex="100%" class="form-field">
+                <textarea matInput required type="text" placeholder="Commentaire " formControlName="commentaire" ></textarea>
+            </mat-form-field>
+
+        </div>
+    </form>
+
+    <button mat-raised-button color="primary" (click)="valider()">Valider</button>
+</mat-dialog-content>
