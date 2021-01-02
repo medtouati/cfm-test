@@ -59,7 +59,7 @@ registerLocaleData(localeFr);
     MatNativeDateModule,
     MatListModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
 
     AgGridModule.withComponents([]),
 

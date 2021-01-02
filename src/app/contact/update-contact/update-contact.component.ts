@@ -22,7 +22,7 @@ export class UpdateContactComponent implements OnInit {
 
   ngOnInit(): void {
     this.initContactForm();
-    this.initAdresseForm();
+    //this.initAdresseForm();
   }
   initContactForm(){
     this.updateContactForm = new FormGroup({
@@ -31,16 +31,16 @@ export class UpdateContactComponent implements OnInit {
       dateNaissance: new FormControl(this.contact.dateNaissance, [Validators.required]),
     })
   }
-  initAdresseForm(){
+  initAdresseForm(adresse: Adresse){
     this.updateAdresseForm = new FormGroup({
-      typeAdresse: new FormControl(''),
-      typeVoie: new FormControl(''),
-      numero: new FormControl(''),
-      rue: new FormControl(''),
-      cp: new FormControl(''),
-      ville: new FormControl(''),
-      commentaire: new FormControl(''),
-      numTelephone: new FormControl(''),
+      typeAdresse: new FormControl(adresse.typeAdresse),
+      typeVoie: new FormControl(adresse.typeVoie),
+      numero: new FormControl(adresse.numero),
+      rue: new FormControl(adresse.rue),
+      cp: new FormControl(adresse.cp),
+      ville: new FormControl(adresse.ville),
+      commentaire: new FormControl(adresse.commentaire),
+      numTelephone: new FormControl(adresse.numTelephone),
 
     })
   }
@@ -57,5 +57,19 @@ export class UpdateContactComponent implements OnInit {
     this.contactService.update(contact).subscribe(res => {
       this.dialogRef.close();
   });    
+  }
+
+  editAdresse(adresse: Adresse){
+    this.isAdresseEditing = true
+    this.initAdresseForm(adresse);
+  }
+
+  deleteAdresse(adresse: Adresse){
+    const index = this.contact.adresses.indexOf(adresse, 0);
+    if (index > -1) {
+      this.contact.adresses.splice(index, 1);
+   }
+   
+
   }
 }

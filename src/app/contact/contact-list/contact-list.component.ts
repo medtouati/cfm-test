@@ -17,6 +17,7 @@ import { UpdateContactComponent } from '../update-contact/update-contact.compone
 export class ContactListComponent implements OnInit {
 
   @ViewChild('agGrid') agGrid: AgGridAngular;
+  isSelected: Boolean = false;
 
   columnDefs = [
     { field: 'nom', sortable: true, filter: true, checkboxSelection: true, editable:true},
@@ -68,6 +69,7 @@ rowData = []
 
 updateContact() {
   const selectedNodes = this.agGrid.api.getSelectedNodes();
+  
   
   const selectedContact = selectedNodes.map(node => node.data )[0];
 

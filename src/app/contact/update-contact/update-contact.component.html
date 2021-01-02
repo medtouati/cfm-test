@@ -20,11 +20,31 @@
                 <input matInput [matDatepicker]="picker" formControlName="dateNaissance">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-              
+            </mat-form-field>
+
 
         </div>
-    </form> 
+    </form>
+
+    <p>
+        Adresse
+        <span *ngIf="isAdresseEditing">
+            <button mat-icon-button color="primary" (click)="valider()"
+            aria-label="Example icon button with a home icon">
+            <mat-icon>Ok</mat-icon>
+        </button>
+
+            <button mat-icon-button color="primary" (click)="isAdresseEditing = false"
+            aria-label="Example icon button with a home icon">
+            <mat-icon>Cancel</mat-icon>
+
+        </button>
+
+        
+        </span>
+        <mat-divider></mat-divider>
+
+    </p>
 
     <form *ngIf="isAdresseEditing" [formGroup]="updateAdresseForm">
 
@@ -60,51 +80,58 @@
                 <input matInput required type="text" placeholder="Ville " formControlName="ville" />
             </mat-form-field>
 
-            
+
         </div>
 
         <div fxLayout="row">
             <mat-form-field fxFlex="100%" class="form-field">
-                <textarea matInput required type="text" placeholder="Commentaire " formControlName="commentaire" ></textarea>
+                <textarea matInput required type="text" placeholder="Commentaire "
+                    formControlName="commentaire"></textarea>
             </mat-form-field>
 
         </div>
+
     </form>
 
-    <div>
+
+
+    <div *ngIf="!isAdresseEditing">
         <mat-list *ngIf="contact && contact.adresses">
-            <!-- <mat-list-item *ngFor="let adresse of contact.adresses">
-
-                {{adresse.typeAdresse}} {{adresse.typeVoie}} <br>
-                {{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}} <br>
-                {{adresse.numTelephone}} {{adresse.commentaire}}
-
-
-            </mat-list-item> -->
 
             <mat-list-item *ngFor="let adresse of contact.adresses; last as last">
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <div>
-                        <p mat-line>{{adresse.typeAdresse}} {{adresse.typeVoie}}</p>
-                        <p mat-line>{{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}}</p>
-                        <p mat-line>{{adresse.numTelephone}} {{adresse.commentaire}}</p>
-                        <p>{{adresse.commentaire}}</p>
-                    </div>
-                    <div>
-                        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
-                            <mat-icon>home</mat-icon>
-                          </button>
-                    </div>
-                    
-                
-                </div>
 
-            
-                <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-            
+                    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
+                        <div>
+                            <p mat-line>{{adresse.typeAdresse}} {{adresse.typeVoie}}</p>
+                            <p mat-line>{{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}}</p>
+                            <p mat-line>{{adresse.numTelephone}} {{adresse.commentaire}}</p>
+                            <p>{{adresse.commentaire}}</p>
+                        </div>
+
+                        <div>
+                            <button mat-icon-button color="primary" (click)="deleteAdresse(adresse)"
+                                aria-label="Example icon button with a home icon">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                            <button mat-icon-button color="primary" (click)="editAdresse(adresse)"
+                                aria-label="Example icon button with a home icon">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+
             </mat-list-item>
-          
+
         </mat-list>
     </div>
-    <button mat-raised-button color="primary" (click)="valider()">Valider</button>
+    <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" (click)="valider()">Valider</button>
+    </div>
 </mat-dialog-content>
