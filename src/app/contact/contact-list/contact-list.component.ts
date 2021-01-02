@@ -6,6 +6,9 @@ import { DatePipe, formatDate } from '@angular/common';
 import { Adresse } from 'src/app/models/adresse.model';
 import { AgGridAngular } from 'ag-grid-angular';
 import { UpdateContactComponent } from '../update-contact/update-contact.component';
+import { GridOptions, Module } from 'ag-grid-community';
+import { MatInputComponent } from 'src/app/utils/mat-input.component';
+
 
 
 @Component({
@@ -24,15 +27,37 @@ export class ContactListComponent implements OnInit {
 
     { field: 'prenom', sortable: true, filter: true, editable:true },
     { field: 'dateNaissance', sortable: true, filter: true, valueFormatter: dateFormatter }, //pipe
-    { field: 'adresses', sortable: true, filter: true, valueFormatter: adresseFormatter },
+    //{ field: 'adresses', sortable: true, filter: true, valueFormatter: adresseFormatter },
+    {
+      headerName: "Full Name (popup input editor)",
+      field: "adresses",
+      cellEditor: "inputRenderer",
+      editable: true,
+      //valueFormatter: adresseFormatter
+  },
 
-];
+  ];
 
 rowData = []
 
+public gridOptions: GridOptions;
+
   constructor(private contactService: ContactService,
               private dialog: MatDialog,
-              @Inject(LOCALE_ID) private locale: string) { }
+              @Inject(LOCALE_ID) private locale: string) {
+           
+                this.gridOptions = <GridOptions>{
+                  rowData: this.rowData,
+                  columnDefs: this.columnDefs,
+                  onGridReady: () => {
+                      this.gridOptions.api.sizeColumnsToFit();
+                  },
+                  rowHeight: 48, // recommended row height for material design data grids,
+                  frameworkComponents: {
+                      inputRenderer: MatInputComponent,
+                  }
+              };
+               }
 
   ngOnInit(): void {
     this.getContacts();

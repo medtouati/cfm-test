@@ -4,9 +4,10 @@
 <button mat-raised-button color="primary" (click)="updateContact()">Update Selected Row</button>
 
 <ag-grid-angular #agGrid
-    style="width: 900px; height: 300px;"
+    style="width: 900px; height: 800px;"
     class="ag-theme-alpine"
     [rowData]="rowData"
+    [gridOptions]="gridOptions"
 
     [columnDefs]="columnDefs"
     rowSelection="multiple"

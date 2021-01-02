@@ -4,7 +4,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -26,11 +26,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
 
 
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { MatInputComponent } from './utils/mat-input.component';
 registerLocaleData(localeFr);
 
 
@@ -39,7 +41,9 @@ registerLocaleData(localeFr);
     AppComponent,
     ContactListComponent,
     AddContactComponent,
-    UpdateContactComponent
+    UpdateContactComponent,
+
+    MatInputComponent
   ],
   entryComponents:[
     AddContactComponent,
@@ -49,6 +53,7 @@ registerLocaleData(localeFr);
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     
     MatDialogModule,
     MatFormFieldModule,
@@ -60,8 +65,9 @@ registerLocaleData(localeFr);
     MatListModule,
     MatDividerModule,
     MatIconModule,
+    MatCardModule,
 
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([ MatInputComponent]),
 
     HttpClientModule,
 
