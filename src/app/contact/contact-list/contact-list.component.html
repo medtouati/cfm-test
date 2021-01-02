@@ -1,10 +1,15 @@
 <p>contact-list works!</p>
 <button mat-raised-button color="primary" (click)="addContact()">Add</button>
+<button mat-raised-button color="primary" (click)="deleteContacts()">Delete Selected Row</button>
+<button mat-raised-button color="primary" (click)="updateContact()">Update Selected Row</button>
 
-<ag-grid-angular
+<ag-grid-angular #agGrid
     style="width: 900px; height: 300px;"
     class="ag-theme-alpine"
     [rowData]="rowData"
+
     [columnDefs]="columnDefs"
+    rowSelection="multiple"
+
 >
 </ag-grid-angular>

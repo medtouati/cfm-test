@@ -8,13 +8,23 @@ import { Contact } from '../models/contact.model';
 })
 export class ContactService {
 
+  baseUrl = 'api/contacts'
   constructor(private http: HttpClient) { }
 
 
-  get():Observable<any>{
-    return this.http.get('api/contacts');
+  get():Observable<Contact[]>{
+    return this.http.get<Contact[]>(this.baseUrl);
   }
-  add(contact: Contact):Observable<any>{
-    return this.http.post('api/contacts', contact);
+  add(contact: Contact):Observable<Contact>{
+    return this.http.post<Contact>(this.baseUrl, contact);
+  }
+  update(contact: Contact):Observable<Contact>{
+    return this.http.put<Contact>(this.baseUrl, contact);
+  }
+  delete(contact: Contact | number):Observable<Contact>{
+    const id = typeof contact === 'number' ? contact : contact.id;
+
+    return this.http.delete<Contact>(this.baseUrl + '/' + id);
+   
   }
 }

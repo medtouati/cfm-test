@@ -1,0 +1,110 @@
+<h3 mat-dialog-title class="modal-header"> Add</h3>
+
+<mat-dialog-content >
+
+    <form [formGroup]="updateContactForm">
+
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Nom" formControlName="nom" />
+            </mat-form-field>
+
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Prenom" formControlName="prenom" />
+            </mat-form-field>
+
+
+            <mat-form-field fxFlex="30%">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dateNaissance">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              
+
+        </div>
+    </form> 
+
+    <form *ngIf="isAdresseEditing" [formGroup]="updateAdresseForm">
+
+
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Type d'adresse" formControlName="typeAdresse" />
+            </mat-form-field>
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Type de voie" formControlName="typeVoie" />
+            </mat-form-field>
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Telephone " formControlName="numTelephone" />
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Numéro" formControlName="numero" />
+            </mat-form-field>
+            <mat-form-field fxFlex="65%" class="form-field">
+                <input matInput required type="text" placeholder="Rue" formControlName="rue" />
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5%">
+            <mat-form-field fxFlex="30%" class="form-field">
+                <input matInput required type="text" placeholder="Code postale" formControlName="cp" />
+            </mat-form-field>
+            <mat-form-field fxFlex="65%" class="form-field">
+                <input matInput required type="text" placeholder="Ville " formControlName="ville" />
+            </mat-form-field>
+
+            
+        </div>
+
+        <div fxLayout="row">
+            <mat-form-field fxFlex="100%" class="form-field">
+                <textarea matInput required type="text" placeholder="Commentaire " formControlName="commentaire" ></textarea>
+            </mat-form-field>
+
+        </div>
+    </form>
+
+    <div>
+        <mat-list *ngIf="contact && contact.adresses">
+            <!-- <mat-list-item *ngFor="let adresse of contact.adresses">
+
+                {{adresse.typeAdresse}} {{adresse.typeVoie}} <br>
+                {{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}} <br>
+                {{adresse.numTelephone}} {{adresse.commentaire}}
+
+
+            </mat-list-item> -->
+
+            <mat-list-item *ngFor="let adresse of contact.adresses; last as last">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <div>
+                        <p mat-line>{{adresse.typeAdresse}} {{adresse.typeVoie}}</p>
+                        <p mat-line>{{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}}</p>
+                        <p mat-line>{{adresse.numTelephone}} {{adresse.commentaire}}</p>
+                        <p>{{adresse.commentaire}}</p>
+                    </div>
+                    <div>
+                        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                            <mat-icon>home</mat-icon>
+                          </button>
+                    </div>
+                    
+                
+                </div>
+
+            
+                <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+            
+            </mat-list-item>
+          
+        </mat-list>
+    </div>
+    <button mat-raised-button color="primary" (click)="valider()">Valider</button>
+</mat-dialog-content>
