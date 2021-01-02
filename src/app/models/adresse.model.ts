@@ -1,3 +1,4 @@
+
 export class Adresse{
     typeAdresse: string;
     typeVoie: string;
@@ -9,5 +10,4 @@ export class Adresse{
 
     numTelephone: string;
     
-
 }

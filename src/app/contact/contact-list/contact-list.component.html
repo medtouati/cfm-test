@@ -3,14 +3,21 @@
 <button mat-raised-button color="primary" (click)="deleteContacts()">Delete Selected Row</button>
 <button mat-raised-button color="primary" (click)="updateContact()">Update Selected Row</button>
 
+<mat-form-field >
+    <input matInput type="text" placeholder="Recherche" 
+      (input)="search($event)">
+  </mat-form-field>
+
 <ag-grid-angular #agGrid
     style="width: 900px; height: 800px;"
     class="ag-theme-alpine"
     [rowData]="rowData"
-    [gridOptions]="gridOptions"
 
     [columnDefs]="columnDefs"
     rowSelection="multiple"
+    [suppressRowTransform]="true"
+    [components]="components"
+
 
 >
 </ag-grid-angular>

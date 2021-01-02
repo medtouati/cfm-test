@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Contact } from '../models/contact.model';
@@ -26,5 +26,14 @@ export class ContactService {
 
     return this.http.delete<Contact>(this.baseUrl + '/' + id);
    
+  }
+
+  searchContacts(term: string): Observable<Contact[]> {
+    term = term.trim();
+    // add safe, encoded search parameter if term is present
+    const options = term ?
+      { params: new HttpParams().set('nom', '^'+term) } : {};
+
+    return this.http.get<Contact[]>(this.baseUrl, options);
   }
 }

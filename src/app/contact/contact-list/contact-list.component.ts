@@ -23,50 +23,57 @@ export class ContactListComponent implements OnInit {
   isSelected: Boolean = false;
 
   columnDefs = [
+    /*{
+      field: 'nom',
+      cellRenderer: 'showCellRenderer',
+      rowSpan: rowSpan,
+      cellClassRules: { 'nom-cell': 'value !== undefined' },
+      width: 200,
+    },*/
+
     { field: 'nom', sortable: true, filter: true, checkboxSelection: true, editable:true},
+
+    { headerName: 'typeAdresse', field: 'typeAdresse' },
+    { headerName: 'typeVoie', field: 'typeVoie' },
+    { headerName: 'rue', field: 'rue' },
+    { headerName: 'numero', field: 'numero' },
+    { headerName: 'cp', field: 'cp' },
+    { headerName: 'ville', field: 'ville' },
+    { headerName: 'numTelephone', field: 'numTelephone' },
+    { headerName: 'commentaire', field: 'commentaire' },
+
+
+    /*{ field: 'nom', sortable: true, filter: true, checkboxSelection: true, editable:true},
 
     { field: 'prenom', sortable: true, filter: true, editable:true },
     { field: 'dateNaissance', sortable: true, filter: true, valueFormatter: dateFormatter }, //pipe
-    //{ field: 'adresses', sortable: true, filter: true, valueFormatter: adresseFormatter },
-    {
-      headerName: "Full Name (popup input editor)",
-      field: "adresses",
-      cellEditor: "inputRenderer",
-      editable: true,
-      //valueFormatter: adresseFormatter
-  },
+    { field: 'adresses', sortable: true, filter: true, valueFormatter: adresseFormatter },
+    */
 
   ];
 
 rowData = []
 
-public gridOptions: GridOptions;
+components;
 
   constructor(private contactService: ContactService,
               private dialog: MatDialog,
               @Inject(LOCALE_ID) private locale: string) {
            
-                this.gridOptions = <GridOptions>{
-                  rowData: this.rowData,
-                  columnDefs: this.columnDefs,
-                  onGridReady: () => {
-                      this.gridOptions.api.sizeColumnsToFit();
-                  },
-                  rowHeight: 48, // recommended row height for material design data grids,
-                  frameworkComponents: {
-                      inputRenderer: MatInputComponent,
-                  }
-              };
                }
 
   ngOnInit(): void {
     this.getContacts();
+
+    this.components = { showCellRenderer: createShowCellRenderer() };
+
   }
 
   getContacts(){
     this.contactService.get().subscribe(res => {
-      console.log(res);
-      this.rowData = res;
+      //console.log(res);
+      //this.rowData = res;
+      this.rowData = this.flatData(res);
     });
 
   }
@@ -106,10 +113,43 @@ updateContact() {
 
 }
 
+search(event){
+  console.log('hey')
+  this.contactService.searchContacts(event.target.value).subscribe(res =>{
+    this.rowData = this.flatData(res);
+    console.log(res);
+  })
+}
 
 
+flatData(contacts){
+  let data = [];
+  contacts.forEach(contact => {
+    contact.adresses.forEach(adresse => {
+      data = [...data, ...[
+        {
+          nom: contact.nom,
+          prenom: contact.prenom,
+          dateNaissance: contact.dateNaissance,
+        
+          typeAdresse: adresse.typeAdresse,
+          typeVoie: adresse.typeVoie,
+          rue: adresse.rue,
+          numero: adresse.numero,
+          ville: adresse.ville,
+          cp: adresse.cp,
+          commentaire: adresse.commentaire,
+      
+          numTelephone: adresse.numTelephone
+      
+        }]
+      ];
+    });
 
+    });
 
+    return data;
+}
 
 
 
@@ -130,4 +170,30 @@ function adresseFormatter(params){
           adresses[0].ville + '\n' +
           adresses[0].numTelephone + '\n' +
           adresses[0].commentaire + ' ' ;
+}
+function rowSpan(params) {
+  if (params.data.show) {
+    return 4;
+  } else {
+    return 2;
+  }
+}
+function createShowCellRenderer() {
+  function ShowCellRenderer() {}
+  ShowCellRenderer.prototype.init = function (params) {
+    var cellBlank = !params.value;
+    if (cellBlank) {
+      return null;
+    }
+    this.ui = document.createElement('div');
+    this.ui.innerHTML =
+      '<div class="show-name">' +
+      params.value +
+      '' +
+      '</div>';
+  };
+  ShowCellRenderer.prototype.getGui = function () {
+    return this.ui;
+  };
+  return ShowCellRenderer;
 }

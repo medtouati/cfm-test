@@ -9,18 +9,18 @@ export class InMemContactService implements InMemoryDbService {
 
   createDb() {
     let contacts: Contact[] = [
-      { id: 0, nom: 'Toyota', prenom: 'Celica', dateNaissance: "", adresses: [
+      { id: 0, nom: 'Herbadji', prenom: 'Anis', dateNaissance: "", adresses: [
         {typeAdresse:'Boite', typeVoie:'A', rue:'La nouvelle France', numero:'15bis',
          ville:'Aubervilliers', cp:93300, commentaire:'', numTelephone:'+33751240131' },
-         {typeAdresse:'Boite2', typeVoie:'B', rue:'Pierre Curie', numero:'7',
+         {typeAdresse:'Boite', typeVoie:'B', rue:'Pierre Curie', numero:'7',
          ville:'Aubervilliers', cp:93300, commentaire:'', numTelephone:'+33751240131' }] 
       },
-      { id: 1, nom: 'Ford', prenom: 'Mondeo', dateNaissance: "", adresses: [
-        {typeAdresse:'Boite', typeVoie:'A', rue:'La nouvelle France', numero:'15bis',
+      { id: 1, nom: 'Don', prenom: 'John', dateNaissance: "", adresses: [
+        {typeAdresse:'Boite', typeVoie:'B', rue:'La nouvelle France', numero:'15bis',
          ville:'Aubervilliers', cp:93300, commentaire:'', numTelephone:'+33751240131' }] 
       },
-      { id: 2, nom: 'Porsche', prenom: 'Boxter', dateNaissance: "", adresses: [
-        {typeAdresse:'Boite', typeVoie:'A', rue:'La nouvelle France', numero:'15bis',
+      { id: 2, nom: 'Sam', prenom: 'Tee', dateNaissance: "", adresses: [
+        {typeAdresse:'Boite', typeVoie:'C', rue:'La nouvelle France', numero:'15bis',
          ville:'Aubervilliers', cp:93300, commentaire:'', numTelephone:'+33751240131' }] 
       }
       ];
