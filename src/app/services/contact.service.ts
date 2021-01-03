@@ -1,16 +1,18 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Contact } from '../models/contact.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
 
-  baseUrl = 'api/contacts'
-  constructor(private http: HttpClient) { }
+  baseUrl = 'api/contacts';
 
+  constructor(private http: HttpClient) { }
+  contacts = [];
 
   get():Observable<Contact[]>{
     return this.http.get<Contact[]>(this.baseUrl);
@@ -23,9 +25,7 @@ export class ContactService {
   }
   delete(contact: Contact | number):Observable<Contact>{
     const id = typeof contact === 'number' ? contact : contact.id;
-
-    return this.http.delete<Contact>(this.baseUrl + '/' + id);
-   
+    return this.http.delete<Contact>(this.baseUrl + '/' + id);  
   }
 
   searchContacts(term: string): Observable<Contact[]> {

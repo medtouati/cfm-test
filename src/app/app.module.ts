@@ -33,6 +33,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { MatInputComponent } from './utils/mat-input.component';
+import { DeleteContactComponent } from './contact/delete-contact/delete-contact.component';
 registerLocaleData(localeFr);
 
 
@@ -43,11 +44,14 @@ registerLocaleData(localeFr);
     AddContactComponent,
     UpdateContactComponent,
 
-    MatInputComponent
+    MatInputComponent,
+
+    DeleteContactComponent
   ],
   entryComponents:[
     AddContactComponent,
-    UpdateContactComponent
+    UpdateContactComponent,
+    DeleteContactComponent
   ],
   imports: [
     BrowserModule,

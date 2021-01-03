@@ -1,23 +1,29 @@
-<p>contact-list works!</p>
-<button mat-raised-button color="primary" (click)="addContact()">Add</button>
-<button mat-raised-button color="primary" (click)="deleteContacts()">Delete Selected Row</button>
-<button mat-raised-button color="primary" (click)="updateContact()">Update Selected Row</button>
+<div fxLayout="row" fxLayoutAlign="space-between center">
 
-<mat-form-field >
-    <input matInput type="text" placeholder="Recherche" 
-      (input)="search($event)">
-  </mat-form-field>
+    <!-- Dialog mode-->
+    <div *ngIf="isDialogMode" fxLayout="row" fxLayoutGap="2%">
+        <button mat-raised-button color="primary" (click)="addContactDialog()">Ajouter</button>
+        <button mat-raised-button [disabled]="!isRowSelected" color="primary"
+            (click)="updateContactDialog()">Modifier</button>
+        <button mat-raised-button [disabled]="!isRowSelected" color="warn" (click)="deleteContacts()">Supprimer</button>
 
-<ag-grid-angular #agGrid
-    style="width: 900px; height: 800px;"
-    class="ag-theme-alpine"
-    [rowData]="rowData"
+    </div>
 
-    [columnDefs]="columnDefs"
-    rowSelection="multiple"
-    [suppressRowTransform]="true"
-    [components]="components"
+    <mat-form-field>
+        <input matInput type="text" placeholder="Recherche" (input)="search($event)">
+    </mat-form-field>
 
+</div>
 
->
-</ag-grid-angular>
+<div class="grid-wrapper">
+
+    <ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 150px);" 
+        id="mygrid" class="ag-theme-alpine"
+        [rowData]="rowData" 
+        [columnDefs]="columnDefs" 
+        [pagination]="true" 
+        [paginationAutoPageSize]="true"
+        (gridReady)="onGridReady($event)" 
+        (selectionChanged)="onSelectionChanged($event)">
+    </ag-grid-angular>
+</div>

@@ -1,5 +1,6 @@
 
 export class Adresse{
+    id: number;
     typeAdresse: string;
     typeVoie: string;
     rue: string;

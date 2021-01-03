@@ -1,0 +1,7 @@
+<h3 mat-dialog-title class="modal-header"> Supprimer</h3>
+
+<mat-dialog-content>Voulez-vous vraiment supprimer le contact <b>{{data.nom}} {{data.prenom}}? </b></mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="deleteContact()">Oui</button>
+    <button mat-button mat-dialog-close (click)="cancel()">Non</button>
+</mat-dialog-actions>

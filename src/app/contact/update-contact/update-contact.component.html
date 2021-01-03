@@ -1,6 +1,6 @@
-<h3 mat-dialog-title class="modal-header"> Add</h3>
+<h3 mat-dialog-title class="modal-header">Modifier</h3>
 
-<mat-dialog-content >
+<mat-dialog-content>
 
     <form [formGroup]="updateContactForm">
 
@@ -8,57 +8,65 @@
         <div fxLayout="row" fxLayoutGap="5%">
             <mat-form-field fxFlex="30%" class="form-field">
                 <input matInput required type="text" placeholder="Nom" formControlName="nom" />
+                <mat-error *ngIf="hasError('nom', 'required', updateContactForm)">Nom est obligatoire</mat-error>      
             </mat-form-field>
 
             <mat-form-field fxFlex="30%" class="form-field">
                 <input matInput required type="text" placeholder="Prenom" formControlName="prenom" />
+                <mat-error *ngIf="hasError('prenom', 'required', updateContactForm)">Prenom est obligatoire</mat-error>      
             </mat-form-field>
 
 
             <mat-form-field fxFlex="30%">
-                <mat-label>Choose a date</mat-label>
+                <mat-label>Date de naissance</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="dateNaissance">
+                <mat-error *ngIf="hasError('dateNaissance', 'required', updateContactForm)">La date de naissance est obligatoire</mat-error>      
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
+              </mat-form-field>
 
         </div>
     </form>
 
     <p>
         Adresse
-        <span *ngIf="isAdresseEditing">
-            <button mat-icon-button color="primary" (click)="valider()"
-            aria-label="Example icon button with a home icon">
-            <mat-icon>Ok</mat-icon>
+        <button *ngIf="!isAdresseEditing && !isAdresseAdding" mat-icon-button color="primary"
+            (click)="showAddAdresseForm(null)">
+            <mat-icon>add</mat-icon>
         </button>
 
-            <button mat-icon-button color="primary" (click)="isAdresseEditing = false"
-            aria-label="Example icon button with a home icon">
-            <mat-icon>Cancel</mat-icon>
-
+        <button *ngIf="isAdresseEditing" mat-icon-button color="primary" (click)="editAdresse()">
+            <mat-icon>check</mat-icon>
+        </button>
+        <button *ngIf="isAdresseAdding" mat-icon-button color="primary" (click)="addAdresse()">
+            <mat-icon>check</mat-icon>
         </button>
 
-        
-        </span>
+        <button *ngIf="isAdresseAdding || isAdresseEditing" mat-icon-button color="primary"
+            (click)="isAdresseEditing = false && isAdresseAdding = false">
+            <mat-icon>cancel</mat-icon>
+        </button>
+
         <mat-divider></mat-divider>
 
     </p>
 
-    <form *ngIf="isAdresseEditing" [formGroup]="updateAdresseForm">
+    <form *ngIf="isAdresseEditing || isAdresseAdding" [formGroup]="updateAdresseForm">
 
 
 
         <div fxLayout="row" fxLayoutGap="5%">
             <mat-form-field fxFlex="30%" class="form-field">
                 <input matInput required type="text" placeholder="Type d'adresse" formControlName="typeAdresse" />
+                <mat-error *ngIf="hasError('typeAdresse', 'required', updateAdresseForm)">Type d'adresse est obligatoire</mat-error>      
             </mat-form-field>
             <mat-form-field fxFlex="30%" class="form-field">
                 <input matInput required type="text" placeholder="Type de voie" formControlName="typeVoie" />
+                <mat-error *ngIf="hasError('typeVoie', 'required', updateAdresseForm)">Type de void est obligatoire</mat-error>      
             </mat-form-field>
             <mat-form-field fxFlex="30%" class="form-field">
                 <input matInput required type="text" placeholder="Telephone " formControlName="numTelephone" />
+                <mat-error *ngIf="hasError('numTelephone', 'required', updateAdresseForm)">Numéro de telephone est obligatoire</mat-error>      
             </mat-form-field>
 
         </div>
@@ -66,72 +74,81 @@
         <div fxLayout="row" fxLayoutGap="5%">
             <mat-form-field fxFlex="30%" class="form-field">
                 <input matInput required type="text" placeholder="Numéro" formControlName="numero" />
+                <mat-error *ngIf="hasError('numero', 'required', updateAdresseForm)">Numéro est obligatoire</mat-error>      
             </mat-form-field>
             <mat-form-field fxFlex="65%" class="form-field">
                 <input matInput required type="text" placeholder="Rue" formControlName="rue" />
+                <mat-error *ngIf="hasError('rue', 'required', updateAdresseForm)">Rue est obligatoire</mat-error>      
             </mat-form-field>
         </div>
 
         <div fxLayout="row" fxLayoutGap="5%">
             <mat-form-field fxFlex="30%" class="form-field">
-                <input matInput required type="text" placeholder="Code postale" formControlName="cp" />
+                <input matInput required type="text" placeholder="Code postal" formControlName="cp" />
+                <mat-error *ngIf="hasError('cp', 'required', updateAdresseForm)">Code postal est obligatoire</mat-error>      
             </mat-form-field>
             <mat-form-field fxFlex="65%" class="form-field">
                 <input matInput required type="text" placeholder="Ville " formControlName="ville" />
+                <mat-error *ngIf="hasError('ville', 'required', updateAdresseForm)">Ville est obligatoire</mat-error>      
             </mat-form-field>
 
-
+            
         </div>
 
         <div fxLayout="row">
             <mat-form-field fxFlex="100%" class="form-field">
-                <textarea matInput required type="text" placeholder="Commentaire "
+                <textarea matInput type="text" placeholder="Commentaire "
                     formControlName="commentaire"></textarea>
             </mat-form-field>
 
         </div>
 
+
     </form>
 
 
 
-    <div *ngIf="!isAdresseEditing">
+    <div *ngIf="!isAdresseEditing && !isAdresseAdding">
         <mat-list *ngIf="contact && contact.adresses">
 
             <mat-list-item *ngFor="let adresse of contact.adresses; last as last">
 
-                    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
-                        <div>
-                            <p mat-line>{{adresse.typeAdresse}} {{adresse.typeVoie}}</p>
-                            <p mat-line>{{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}}</p>
-                            <p mat-line>{{adresse.numTelephone}} {{adresse.commentaire}}</p>
-                            <p>{{adresse.commentaire}}</p>
-                        </div>
+                <div fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center">
+                    <div>
+                        <p mat-line>{{adresse.typeAdresse}}, {{adresse.typeVoie}} / {{adresse.numTelephone}}</p>
+                        <p mat-line>{{adresse.numero}} {{adresse.rue}}, {{adresse.cp}} {{adresse.ville}}</p>
+                        <p mat-line> {{adresse.commentaire}}</p>
+                        <p></p>
+                    </div>
 
-                        <div>
-                            <button mat-icon-button color="primary" (click)="deleteAdresse(adresse)"
-                                aria-label="Example icon button with a home icon">
-                                <mat-icon>delete</mat-icon>
-                            </button>
+                    <div>
+                        <button mat-icon-button color="primary" (click)="deleteAdresse(adresse)"
+                            aria-label="Example icon button with a home icon">
+                            <mat-icon>delete</mat-icon>
+                        </button>
 
-                            <button mat-icon-button color="primary" (click)="editAdresse(adresse)"
-                                aria-label="Example icon button with a home icon">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-
-                        </div>
-
+                        <button mat-icon-button color="primary" (click)="showEditAdresseForm(adresse)"
+                            aria-label="Example icon button with a home icon">
+                            <mat-icon>edit</mat-icon>
+                        </button>
 
                     </div>
 
 
-                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                </div>
+
+
+                <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
 
             </mat-list-item>
 
         </mat-list>
     </div>
-    <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" (click)="valider()">Valider</button>
+
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2%">
+        <button mat-raised-button type="submit" color="primary" (click)="validate()" [disabled]="!updateContactForm.valid || (updateAdresseForm && !updateAdresseForm.valid)">Valider</button>
+        <button mat-raised-button mat-dialog-close color="warn">Annuler</button>
+
     </div>
 </mat-dialog-content>

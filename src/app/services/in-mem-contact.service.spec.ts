@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InMemContactService } from './in-mem-contact.service';
+import { InMemAdresseService } from './in-mem-adresse.service';
 
-describe('InMemContactService', () => {
-  let service: InMemContactService;
+describe('InMemAdresseService', () => {
+  let service: InMemAdresseService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InMemContactService);
+    service = TestBed.inject(InMemAdresseService);
   });
 
   it('should be created', () => {
